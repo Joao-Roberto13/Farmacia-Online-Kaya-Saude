@@ -3,7 +3,7 @@ import hashlib
 import Pedido
 
 banco = mysql.connector.connect(
-    host="127.0.0.1",
+    host="localhost",
     user="root",
     passwd="@Junior2005",
     database="farmacia_kaya" )
