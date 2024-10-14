@@ -1,4 +1,0 @@
-streamlit
-pyqt5
-fpdf
-mysql-connector-python
