@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>amoxicilina.png</file>
+    <file>aspirina.jpeg</file>
+    <file>cetoconazol.jpeg</file>
+    <file>ibuprofeno.jpeg</file>
+    <file>lidocaina.jpeg</file>
+    <file>losartan.jpeg</file>
+    <file>metformina.jpeg</file>
+    <file>paracetamol.jpeg</file>
+    <file>tia.jpg</file>
+    <file>logosemfundo1.png</file>
+    <file>IMG-20240908-WA0026.jpg</file>
+    <file>login.png</file>
+    <file>Farmacia Kaya.png</file>
+  </qresource>
+</RCC>

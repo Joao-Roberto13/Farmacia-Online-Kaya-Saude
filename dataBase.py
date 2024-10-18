@@ -25,7 +25,7 @@ def verificar_password(email, password):
         cursor = banco.cursor()
         cursor.execute('SELECT `senha` FROM cliente WHERE email = %s', (email,))
         dados_lidos = cursor.fetchone()
-        cursor.close()   
+        cursor.close()
 
         if dados_lidos:
             input_senha_criptografada = hashlib.sha256(password.encode()).hexdigest() #criptografa a senha inserida para ver se é igual...
@@ -52,14 +52,14 @@ def fazerEncomenda(email,descricao, quantidade, pagamento, endereco):
     cursor.execute("SELECT id FROM cliente WHERE email = %s", (email,))
     id = cursor.fetchone()
     id = id[0]
-    comando_SQL = "INSERT INTO pedido (cliente_id, descricao, pagamento, endereco, estado, quantidade)  VALUES (%s,%s,%s,%s,%s,%s)"
-    dados = (id, str(descricao), str(pagamento), str(endereco), str("N/A"), str(quantidade))
+    comando_SQL = "INSERT INTO pedido (cliente_id, descricao, pagamento, endereco, estado, quantidade, preco_unitario)  VALUES (%s,%s,%s,%s,%s,%s,%s)"
+    dados = (id, str(descricao), str(pagamento), str(endereco), str("N/A"), str(quantidade), str(10))
     cursor.execute(comando_SQL,dados)
     banco.commit()
     cursor.close()
 
 def selecionarPedidos(email):
-    cursor = banco.cursor() 
+    cursor = banco.cursor()
     cursor.execute("SELECT * FROM farmacia_kaya.pedido where pedido.cliente_id = (SELECT cliente.id from farmacia_kaya.cliente where cliente.email = %s) ORDER BY pedido.data DESC",(email,))
     dados_lidos = cursor.fetchall()
     cursor.close()
@@ -71,7 +71,7 @@ def selecionarPedidos(email):
     return lista
 
 def selecionarTodosProdutos():
-    cursor = banco.cursor() 
+    cursor = banco.cursor()
     cursor.execute("SELECT * FROM produto")
     dados_lidos = cursor.fetchall()
     cursor.close()
@@ -84,7 +84,7 @@ def selecionarTodosProdutos():
     return dados_lidos
 
 def selecionarTodosClientes():
-    cursor = banco.cursor() 
+    cursor = banco.cursor()
     cursor.execute("SELECT nome, email, contacto, cidade, regiao FROM cliente")
     dados_lidos = cursor.fetchall()
     cursor.close()
@@ -92,7 +92,7 @@ def selecionarTodosClientes():
     return dados_lidos
 
 def selecionarTodosPedidos():
-    cursor = banco.cursor() 
+    cursor = banco.cursor()
     cursor.execute("SELECT data, descricao, pagamento, endereco, estado, quantidade, preco_unitario FROM pedido")
     dados_lidos = cursor.fetchall()
     cursor.close()
@@ -100,7 +100,7 @@ def selecionarTodosPedidos():
     return dados_lidos
 
 def selecionarEstadoPedidos():
-    cursor = banco.cursor() 
+    cursor = banco.cursor()
     cursor.execute("SELECT pedido_id, data, descricao, pagamento, endereco, estado, quantidade, preco_unitario FROM pedido WHERE estado <> 'Recebido' ORDER BY estado")
     dados_lidos = cursor.fetchall()
     cursor.close()

@@ -1,5 +1,5 @@
 import time
-import kayaPic
+import kaya
 import dataBase as db
 from fpdf import FPDF
 from PyQt5.QtCore import QTime, QTimer
@@ -33,7 +33,7 @@ def barra():
             #Para não separar os eventos...
             QApplication.processEvents()
             #2segundos e fecha a tela de login e abre a main_tela...
-            time.sleep(2)
+            time.sleep(4)
             splash.close()
             screenLogin.setWindowFlag(QtCore.Qt.FramelessWindowHint)
             screenLogin.show()
@@ -50,6 +50,8 @@ def preencherTabela():
     #Para o qtwidgets funcionar ao mesmo tempo com o ciclo...
     QApplication.processEvents()
     dados_lidos = db.selecionarEstadoPedidos()
+
+
 
     screen.tableWidget.setRowCount(len(dados_lidos))
     screen.tableWidget.setColumnCount(8)
@@ -135,16 +137,55 @@ def windowsCompra():
     screenCompra.comboBox.addItems(d)
     preencherTabela()
 
+def update_clock():
+    current_time = time.strftime('%H:%M:%S')
+    screen.label_2.setText(current_time)
+
+def ajuda():
+    ajuda_text = (
+        "Bem-vindo ao sistema de gestao de clientes da Farmacia Kaya!\n\n"
+        "Para navegar pelo programa, utilize o menu lateral esquerdo.\n"
+        "- Home: Acesse as principais funcionalidades.\n"
+        "- Histórico: Veja o histórico de pedidos.\n"
+        "- Stock: Gerencie o estoque de produtos.\n"
+        "- Configurações: Ajuste as preferências do sistema.\n"
+        "- Ajuda: Obtenha assistência sobre como usar o programa.\n"
+        "- Sair: Feche o aplicativo.\n\n"
+        "Clique nos botões correspondentes para interagir com cada seção."
+    )
+    QMessageBox.information(screen, "Ajuda",ajuda_text)
+
+def historico():
+    hist.show()
+    dados_lidos = db.selecionarTodosPedidos()
+    hist.tableWidget.setRowCount(len(dados_lidos))
+    hist.tableWidget.setColumnCount(7)
+
+    for i in range(0, len(dados_lidos)):
+        for j in range(0, 7):
+            hist.tableWidget.setItem(i,j,QtWidgets.QTableWidgetItem(str(dados_lidos[i][j])))
+
+def sair():
+    app.closeAllWindows()
+
 def login():
     user = screenLogin.lineEdit.text()
     password = screenLogin.lineEdit_2.text()
 
-    if user == "20221234" and password == "1234":
+    if user == "20201234" and password == "1234":
         screenLogin.close()        
         screen.show()
         preencherTabela()
+        
     else:
         QMessageBox.warning(screenLogin,"Incorreto!!!","Os dados introduzidos estão incorretos!!!")
+
+def stock():
+    screenStock.show()
+
+def sobre():
+    info = "Desenvolvido a 17 de setembro de 2024 por:\nMariamo Narotam-20220985\nMichelle Boane-20200266\nKeny Muchanga-20210410\nJoão Roberto-20220852"
+    QMessageBox.information(screen,"Sobre",info)
 
 # Configurando o GUI e conectando os botões as funções...
 app = QtWidgets.QApplication([])
@@ -152,6 +193,8 @@ screen = uic.loadUi("InterfaceG.ui")
 splash = uic.loadUi("splash_screen.ui")
 screenCompra = uic.loadUi("InterfacePedido.ui")
 screenLogin = uic.loadUi("InterfaceLogin.ui")
+hist = uic.loadUi("interface_Historico.ui")
+screenStock = uic.loadUi("interface_Stock.ui")
 
 screen.pushButton_2.clicked.connect(alterarEstado)#Não aceita usar diretamente o preencherTabela então vamos usar alterarEstado que aceita...
 screen.pushButton_3.clicked.connect(alterarEstado)
@@ -161,11 +204,22 @@ screen.actionPedidos_2.triggered.connect(exportarPedidos)
 screen.pushButton_6.clicked.connect(windowsCompra)
 screenCompra.pushButton_3.clicked.connect(novaCompra)
 screenLogin.pushButton.clicked.connect(login)
+screen.actionSobre_3.triggered.connect(sobre)
+
+
+screen.pushButton_5.clicked.connect(ajuda)
+screen.pushButton_7.clicked.connect(sair)
+screen.pushButton.clicked.connect(historico)
+screen.pushButton_4.clicked.connect(stock)
 
 splash.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 splash.setAutoFillBackground(False)
 splash.show()
 barra()
+
+timer = QtCore.QTimer()
+timer.timeout.connect(update_clock)
+timer.start(1000)
 
 app.exec_()
 

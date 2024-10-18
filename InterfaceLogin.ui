@@ -10,10 +10,16 @@
     <height>448</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>969</width>
+    <height>448</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
     <width>969</width>
-    <height>507</height>
+    <height>448</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -174,10 +180,10 @@ QPushButton:pressed{
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>70</y>
-      <width>261</width>
-      <height>51</height>
+      <x>400</x>
+      <y>-70</y>
+      <width>661</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="font">
@@ -189,19 +195,19 @@ QPushButton:pressed{
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">image: url(:/newPrefix/logosemfundo1.png);</string>
     </property>
     <property name="text">
-     <string>Log-In</string>
+     <string/>
     </property>
    </widget>
    <zorder>label_4</zorder>
    <zorder>label_3</zorder>
    <zorder>label</zorder>
+   <zorder>label_5</zorder>
+   <zorder>pushButton</zorder>
    <zorder>lineEdit_2</zorder>
    <zorder>lineEdit</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>label_5</zorder>
   </widget>
  </widget>
  <resources>

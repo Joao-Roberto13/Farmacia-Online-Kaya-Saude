@@ -142,7 +142,7 @@ QProgressBar::chunk{
   </widget>
  </widget>
  <resources>
-  <include location="Source.qrc.txt"/>
+  <include location="kaya.qrc.txt"/>
   <include location="kaya.qrc.txt"/>
  </resources>
  <connections/>
